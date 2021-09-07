@@ -1,0 +1,43 @@
+{
+	"name": "ricecereal-css-refactor-tool",
+	"displayName": "RiceCereal CSS Refactor Tool",	
+	"description": "Highlights unused css classes looking for js files in the same folder as the css/scss/sass files, support CSS Module",
+	"version": "0.0.1",
+	"publisher": "yxzhk",
+	"license": "Apache License 2.0",
+	"engines": {
+		"vscode": "^1.32.0"
+	},
+	"icon": "icon.png",
+	"galleryBanner": {
+		"color": "#0085c8",
+		"theme": "dark"
+	},
+	"repository": {
+		"url": "https://github.com/HK-Zhang/RiceCereal"
+	},
+	"keywords": [
+		"unused",
+		"css"
+	],
+	"categories": [
+		"Other"
+	],
+	"activationEvents": [
+		"*"
+	],
+	"main": "./extension.js",
+	"contributes": {
+		"colors": [
+			{
+				"id": "riceCereal.unusedCssClassColor",
+				"description": "unused css classes color",
+				"defaults": {
+					"dark": "#595959",
+					"light": "#a4a4a4",
+					"highContrast": "#595959"
+				}
+			}
+		]
+	}
+}
