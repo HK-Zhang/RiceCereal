@@ -6,7 +6,9 @@ function activate(context) {
     let timeout = undefined;
     const styleFileExtensions = ['css', 'scss', 'sass'];
     const htmlFileExtensions = ['htm', 'html', 'jsx', 'js'];
-    const cssFindRegEx = /([^\s]+).+(?=\s\{)/mgi;
+    // const cssFindRegEx = /([^\s]+).+(?=\s\{)/mgi;
+    const cssEscapedRegEx  = /\s*@.+|\s*:.+(?=\s\{)|\s*&\[.+(?=\s\{)/mgi;
+    const cssFindRegEx = /.+(?=\s\{)/mgi;
     const fullHtmlTagsClassesRegEx = /(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\{styles.)[\w_-]+/gmi;
     const unusedClassDecorationType = vscode.window.createTextEditorDecorationType({
         color: { id: 'riceCereal.unusedCssClassColor' }
