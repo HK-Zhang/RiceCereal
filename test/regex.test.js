@@ -1,7 +1,8 @@
 testCssFindRegEx = (str) => {
   //https://jex.im/regulex
   // const cssFindRegEx = /.+(?=\s\{)/gim;
-  const cssFindRegEx = /[^\s&]+(?=\s\{)|[^,\s]+(?=,)|[^,\s&]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)/gim;
+  //TODO abbr[title],abbr[data-original-title] | abbr[title],abbr[data-original-title] {
+  const cssFindRegEx = /[^\s&]+(?=\s\{)|\.[^,\s]+(?=,)|[^,\s&]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
   const unusedClass = [];
   let match;
   while ((match = cssFindRegEx.exec(str))) {
@@ -87,4 +88,46 @@ test("  &::-webkit-scrollbar {", () => {
 
 test("      @media all and (max-width: 991px) {", () => {
   expect(testEscapedRegEx("      @media all and (max-width: 991px) {")).toContain("@media all and (max-width: 991px)");
+});
+
+
+test("  font-family: sans-serif;", () => {
+  expect(testCssFindRegEx("  font-family: sans-serif;")).toHaveLength(0);
+});
+
+test("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);", () => {
+  expect(testCssFindRegEx("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);")).toHaveLength(0);
+});
+
+test("  font-family: sans-serif;", () => {
+  expect(testEscapedRegEx("  font-family: sans-serif;")).toHaveLength(0);
+});
+
+test("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);", () => {
+  expect(testEscapedRegEx("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);")).toHaveLength(0);
+});
+
+test('  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";', () => {
+  expect(testCssFindRegEx('  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";')).toHaveLength(0);
+});
+
+test('  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";', () => {
+  expect(testEscapedRegEx('  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";')).toHaveLength(0);
+});
+
+
+test("h1,", () => {
+  expect(testCssFindRegEx("h1,")).toContain("h1");
+});
+
+test("h1,", () => {
+  expect(testEscapedRegEx("h1,")).toHaveLength(0);
+});
+
+test("abbr[title],", () => {
+  expect(testCssFindRegEx("abbr[title],")).toContain("title");
+});
+
+test("abbr[title],", () => {
+  expect(testEscapedRegEx("abbr[title],")).toHaveLength(0);
 });
