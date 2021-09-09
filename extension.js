@@ -12,7 +12,7 @@ function activate(context) {
   const cssFindRegEx =
     /[^\s&]+(?=\s\{)|\.[^,\s]+(?=,)|[^,\s&]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
   const fullHtmlTagsClassesRegEx =
-    /(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+/gim;
+    /(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`).+(?=\`)/gim;
   const unusedClassDecorationType =
     vscode.window.createTextEditorDecorationType({
       color: { id: "riceCereal.unusedCssClassColor" },
