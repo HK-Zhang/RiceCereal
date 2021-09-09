@@ -14,7 +14,7 @@ testCssFindRegEx = (str) => {
 };
 
 testEscapedRegEx = (str) => {
-  const cssEscapedRegEx = /\s*@.+|\s*:\S+|\s*\[.+\]|\s*::.+(?=\s\{)|\s*:[^\s]+(?=\s\.)/mgi;
+  const cssEscapedRegEx = /\s*@.+|\s*:\S+|\s*\[.+\]|\s*::.+(?=\s\{)|\s*:[^\s]+(?=\s\.)|\s*[.ant-]{5}[\w_-]+\b/mgi;
   const escapedClass = [];
   let match;
   while ((match = cssEscapedRegEx.exec(str))) {
@@ -148,4 +148,8 @@ test("abbr[title],", () => {
 
 test("title", () => {
   expect(testEscapedRegEx("title")).toHaveLength(0);
+});
+
+test("        .ant-menu-root, .ant-menu-root {", () => {
+  expect(testEscapedRegEx("        .ant-menu-root, .ant-menu-root {")).toContain(".ant-menu-root");
 });
