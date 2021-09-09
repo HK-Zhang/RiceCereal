@@ -3,7 +3,7 @@ testCssFindRegEx = (str) => {
   //https://www.debuggex.com/
   // const cssFindRegEx = /.+(?=\s\{)/gim;
   //TODO abbr[title],abbr[data-original-title] | abbr[title],abbr[data-original-title] {
-  const cssFindRegEx = /[^\s&]+(?=\s\{)|\.[^,\s]+(?=,)|[^,\s&]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
+  const cssFindRegEx = /[^\s&>]+(?=\s\{)|\.[^,\s]+(?=>)|\.[^,\s]+(?=,)|[^,\s&>]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[\s]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
   const unusedClass = [];
   let match;
   while ((match = cssFindRegEx.exec(str))) {
@@ -152,4 +152,8 @@ test("title", () => {
 
 test("        .ant-menu-root, .ant-menu-root {", () => {
   expect(testEscapedRegEx("        .ant-menu-root, .ant-menu-root {")).toContain(".ant-menu-root");
+});
+
+test(".ol-container>li {", () => {
+  expect(testCssFindRegEx(".ol-container>li {")).toContain(".ol-container");
 });

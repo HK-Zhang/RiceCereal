@@ -1,6 +1,6 @@
 testHtmlRegEx = (str) => {
   const cssEscapedRegEx =
-    /(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
+    /(?<=ClassName[\s\S]+")[^:]+(?="[\s\S]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
   const escapedClass = [];
   let match;
   while ((match = cssEscapedRegEx.exec(str))) {
@@ -30,4 +30,21 @@ test("                            className={`${styles.imageUp} opacity${this.st
       "                            className={`${styles.imageUp} opacity${this.state.opacity}`}"
     )
   ).toContain("imageUp");
+});
+
+test('            className: "tableCell",', () => {
+  expect(testHtmlRegEx('            className: "tableCell",')).toContain(
+    "tableCell"
+  );
+});
+
+test('mutiple line code " pointer row-even" : " pointer row-odd"', () => {
+  const result = testHtmlRegEx(`                rowClassName={(record, index) => {
+    return (
+      styles.rowContainer +
+      (index % 2 === 0 ? " pointer row-even" : " pointer row-odd")
+    );
+  }}`);
+  expect(result).toContain("pointer row-even");
+  expect(result).toContain("pointer row-odd");
 });
