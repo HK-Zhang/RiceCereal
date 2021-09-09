@@ -1,6 +1,6 @@
 testHtmlRegEx = (str) => {
   const cssEscapedRegEx =
-    /(?<=ClassName[\s\S]+")[^:]+(?="[\s\S]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
+    /(?<=[A-Za-z]+ClassName[\s\S]+")[^:]+(?="[\s\S]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
   const escapedClass = [];
   let match;
   while ((match = cssEscapedRegEx.exec(str))) {
@@ -35,6 +35,12 @@ test("                            className={`${styles.imageUp} opacity${this.st
 test('            className: "tableCell",', () => {
   expect(testHtmlRegEx('            className: "tableCell",')).toContain(
     "tableCell"
+  );
+});
+
+test('                    <li className="mr-4">', () => {
+  expect(testHtmlRegEx('                    <li className="mr-4">')).toContain(
+    "mr-4"
   );
 });
 
