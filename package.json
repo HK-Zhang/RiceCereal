@@ -2,7 +2,7 @@
 	"name": "ricecereal-css-refactor-tool",
 	"displayName": "RiceCereal CSS Refactor Tool",
 	"description": "Highlights unused css classes looking for js files in the same folder as the css/scss/sass files, support CSS Module",
-	"version": "0.0.1",
+	"version": "0.0.2",
 	"publisher": "yxzhk",
 	"license": "Apache License 2.0",
 	"engines": {

@@ -1,5 +1,6 @@
 testCssFindRegEx = (str) => {
   //https://jex.im/regulex
+  //https://www.debuggex.com/
   // const cssFindRegEx = /.+(?=\s\{)/gim;
   //TODO abbr[title],abbr[data-original-title] | abbr[title],abbr[data-original-title] {
   const cssFindRegEx = /[^\s&]+(?=\s\{)|\.[^,\s]+(?=,)|[^,\s&]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
