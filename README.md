@@ -12,6 +12,14 @@ Automatically highlights the unused css classes when opening css/scss/sass files
 
 ## Release Notes
 
+### 0.0.4
+
+support css module. css must be imported as an object named 'styles'.
+
+```js
+import styles from "./component.module.scss";
+```
+
 ### 0.0.1
 
 Initial release
