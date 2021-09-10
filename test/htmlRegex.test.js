@@ -1,6 +1,8 @@
 testHtmlRegEx = (str) => {
-  const cssEscapedRegEx =
-    /(?<=[A-Za-z]+ClassName[\s\S]+")[^:]+(?="[\s\S]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
+  // const cssEscapedRegEx =
+  //   /(?<=[A-Za-z]+ClassName[\s\S]+["'`]{1})[^:]+(?=["'`]{1}[\s\S]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
+   const cssEscapedRegEx =
+    /(?<=className=\{[^\}]+["`']{1})[^:"`'\{\}]+(?=["'`]{1}[^\{]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
   const escapedClass = [];
   let match;
   while ((match = cssEscapedRegEx.exec(str))) {
@@ -45,7 +47,8 @@ test('                    <li className="mr-4">', () => {
 });
 
 test('mutiple line code " pointer row-even" : " pointer row-odd"', () => {
-  const result = testHtmlRegEx(`                rowClassName={(record, index) => {
+  const result =
+    testHtmlRegEx(`                rowClassName={(record, index) => {
     return (
       styles.rowContainer +
       (index % 2 === 0 ? " pointer row-even" : " pointer row-odd")
@@ -53,4 +56,18 @@ test('mutiple line code " pointer row-even" : " pointer row-odd"', () => {
   }}`);
   expect(result).toContain("pointer row-even");
   expect(result).toContain("pointer row-odd");
+});
+
+
+test('mutiple line code className={', () => {
+  const result =
+    testHtmlRegEx(`            <div
+    className={
+      this.state.hasScrollDown === true
+        ? 'filterContainer imageSearchFilters fixed'
+        : "filterContainer imageSearchFilters"
+    }
+  >`);
+  expect(result).toContain("filterContainer imageSearchFilters fixed");
+  expect(result).toContain("filterContainer imageSearchFilters");
 });
