@@ -1,23 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 const vscode = require("vscode");
+const {
+  cssEscapedRegEx,
+  cssFindRegEx,
+  fullHtmlTagsClassesRegEx,
+  styleFileExtensions,
+  htmlFileExtensions,
+} = require("./variable.js");
+const { isFileType } = require("./utility.js");
 function activate(context) {
-  console.log("RiceCereal Unused CSS Plugin is activated");
+  console.log("RiceCereal CSS Refactor Tool is activated");
   let timeout = undefined;
-  const styleFileExtensions = ["css", "scss", "sass"];
-  const htmlFileExtensions = ["htm", "html", "jsx", "js"];
-  // const cssFindRegEx = /([^\s]+).+(?=\s\{)/mgi;
-  const cssEscapedRegEx =
-    /\s*@.+|\s*:\S+|\s*\[.+\]|\s*::.+(?=\s\{)|\s*:[^\s]+(?=\s\.)|\s*[.ant-]{5}[\w_-]+\b/gim;
-  const cssFindRegEx =
-    /[^\s&>]+(?=\s\{)|\.[^,\s]+(?=>)|\.[^,\s]+(?=,)|[^,\s&>]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[\s]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
-  const fullHtmlTagsClassesRegEx =
-    /(?<=className=\{[^\}]+["`']{1})[^:"`'\{\}]+(?=["'`]{1}[^\{]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
+  let activeEditor = vscode.window.activeTextEditor;
+
   const unusedClassDecorationType =
     vscode.window.createTextEditorDecorationType({
       color: { id: "riceCereal.unusedCssClassColor" },
     });
-  let activeEditor = vscode.window.activeTextEditor;
+
   function loadHtmlDocuments(files) {
     const htmlDocuments = [];
     return new Promise((resolve) => {
@@ -32,6 +33,7 @@ function activate(context) {
       });
     });
   }
+
   function isClassUsed(className, documents) {
     let found = false;
     documents.forEach((doc) => {
@@ -63,6 +65,7 @@ function activate(context) {
     });
     return found;
   }
+
   function checkFiles(editor) {
     return new Promise((resolve, reject) => {
       try {
@@ -87,10 +90,7 @@ function activate(context) {
       }
     });
   }
-  function isFileType(path, types) {
-    const extension = path.substring(path.lastIndexOf(".") + 1, path.length);
-    return types.find((elem) => elem === extension) !== undefined;
-  }
+
   function updateDecorations() {
     const editor = activeEditor ? activeEditor : undefined;
     if (!editor) {
@@ -132,6 +132,7 @@ function activate(context) {
         vscode.window.showErrorMessage(`Error: ${error}`);
       });
   }
+
   function triggerUpdateDecorations() {
     if (timeout) {
       clearTimeout(timeout);
@@ -139,9 +140,11 @@ function activate(context) {
     }
     timeout = setTimeout(updateDecorations, 1000);
   }
+
   if (activeEditor) {
     triggerUpdateDecorations();
   }
+
   vscode.window.onDidChangeActiveTextEditor(
     (editor) => {
       activeEditor = editor;
@@ -152,6 +155,7 @@ function activate(context) {
     null,
     context.subscriptions
   );
+
   vscode.workspace.onDidChangeTextDocument(
     (event) => {
       if (activeEditor && event.document === activeEditor.document) {

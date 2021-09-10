@@ -3,7 +3,36 @@ testCssFindRegEx = (str) => {
   //https://www.debuggex.com/
   // const cssFindRegEx = /.+(?=\s\{)/gim;
   //TODO abbr[title],abbr[data-original-title] | abbr[title],abbr[data-original-title] {
-  const cssFindRegEx = /[^\s&>]+(?=\s\{)|\.[^,\s]+(?=>)|\.[^,\s]+(?=,)|[^,\s&>]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[\s]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
+  const cssFindRegExTest =
+    /[^\s&>]+(?=\s\{)|\.[^,\s]+(?=>)|\.[^,\s]+(?=,)|[^,\s&>]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[\s]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
+
+  const cssregEx1 = /[^\s&>]+(?=\s\{)/;
+  const cssregEx2 = /\.[^,\s]+(?=>)/;
+  const cssregEx3 = /\.[^,\s]+(?=,)/;
+  const cssregEx4 = /[^,\s&>]+(?=\s\.)/;
+  const cssregEx5 = /@.+(?=\s\{)/;
+  const cssregEx6 = /(?<=&:).+(?=\s\{)/;
+  const cssregEx7 = /(?<=&\[).+(?=\s\{)/;
+  const cssregEx8 = /(?<=&)\..+(?=\s\{)/;
+  const cssregEx9 = /^[^\[\s]+(?=,$)/;
+  const cssregEx10 = /(?<=abbr\[).+(?=\],$)/;
+
+  const cssre1 = cssregEx1.toString().replace(/\//g, "");
+  const cssre2 = cssregEx2.toString().replace(/\//g, "");
+  const cssre3 = cssregEx3.toString().replace(/\//g, "");
+  const cssre4 = cssregEx4.toString().replace(/\//g, "");
+  const cssre5 = cssregEx5.toString().replace(/\//g, "");
+  const cssre6 = cssregEx6.toString().replace(/\//g, "");
+  const cssre7 = cssregEx7.toString().replace(/\//g, "");
+  const cssre8 = cssregEx8.toString().replace(/\//g, "");
+  const cssre9 = cssregEx9.toString().replace(/\//g, "");
+  const cssre10 = cssregEx10.toString().replace(/\//g, "");
+
+  const cssFindRegEx = new RegExp(
+    `${cssre1}|${cssre2}|${cssre3}|${cssre4}|${cssre5}|${cssre6}|${cssre7}|${cssre8}|${cssre9}|${cssre10}`,
+    "gmi"
+  );
+
   const unusedClass = [];
   let match;
   while ((match = cssFindRegEx.exec(str))) {
@@ -14,7 +43,28 @@ testCssFindRegEx = (str) => {
 };
 
 testEscapedRegEx = (str) => {
-  const cssEscapedRegEx = /\s*@.+|\s*:\S+|\s*\[.+\]|\s*::.+(?=\s\{)|\s*:[^\s]+(?=\s\.)|\s*[.ant-]{5}[\w_-]+\b/mgi;
+  const cssEscapedRegExTest =
+    /\s*@.+|\s*:\S+|\s*\[.+\]|\s*::.+(?=\s\{)|\s*:[^\s]+(?=\s\.)|\s*[.ant-]{5}[\w_-]+\b/gim;
+
+    const escapeCssRegEx1 = /\s*@.+/;
+    const escapeCssRegEx2 = /\s*:\S+/;
+    const escapeCssRegEx3 = /\s*\[.+\]/;
+    const escapeCssRegEx4 = /\s*::.+(?=\s\{)/;
+    const escapeCssRegEx5 = /\s*:[^\s]+(?=\s\.)/;
+    const escapeCssRegEx6 = /\s*[.ant-]{5}[\w_-]+\b/;
+
+    const ecssre1 = escapeCssRegEx1.toString().replace(/\//g, "");
+    const ecssre2 = escapeCssRegEx2.toString().replace(/\//g, "");
+    const ecssre3 = escapeCssRegEx3.toString().replace(/\//g, "");
+    const ecssre4 = escapeCssRegEx4.toString().replace(/\//g, "");
+    const ecssre5 = escapeCssRegEx5.toString().replace(/\//g, "");
+    const ecssre6 = escapeCssRegEx6.toString().replace(/\//g, "");
+
+    const cssEscapedRegEx = new RegExp(
+      `${ecssre1}|${ecssre2}|${ecssre3}|${ecssre4}|${ecssre5}|${ecssre6}`,
+      "gmi"
+    );
+
   const escapedClass = [];
   let match;
   while ((match = cssEscapedRegEx.exec(str))) {
@@ -41,7 +91,9 @@ test("    .o-header-left, .o-header-right {", () => {
 });
 
 test("      .o-header-links .o-header-link:hover, .o-header-links .o-header-link:focus, .o-header-links .o-header-link:active {", () => {
-  const result = testCssFindRegEx("      .o-header-links .o-header-link:hover, .o-header-links .o-header-link:focus, .o-header-links .o-header-link:active {");
+  const result = testCssFindRegEx(
+    "      .o-header-links .o-header-link:hover, .o-header-links .o-header-link:focus, .o-header-links .o-header-link:active {"
+  );
   expect(result).toContain(".o-header-links");
   expect(result).toContain(".o-header-link:hover");
   expect(result).toContain(".o-header-link:focus");
@@ -49,7 +101,9 @@ test("      .o-header-links .o-header-link:hover, .o-header-links .o-header-link
 });
 
 test("        &.annicon-twitter {", () => {
-  expect(testCssFindRegEx("        &.annicon-twitter {")).toContain(".annicon-twitter");
+  expect(testCssFindRegEx("        &.annicon-twitter {")).toContain(
+    ".annicon-twitter"
+  );
 });
 
 test("html {", () => {
@@ -73,48 +127,55 @@ test("[disabled]", () => {
 // });
 
 test("      &:hover .anticon {", () => {
-  const result =testCssFindRegEx("      &:hover .anticon {");
+  const result = testCssFindRegEx("      &:hover .anticon {");
   expect(result).toContain(":hover");
   expect(result).toContain(".anticon");
 });
-
 
 test(":hover", () => {
   expect(testEscapedRegEx(":hover")).toContain(":hover");
 });
 
 test("  &::-webkit-scrollbar {", () => {
-  expect(testCssFindRegEx("  &::-webkit-scrollbar {")).toContain("::-webkit-scrollbar");
+  expect(testCssFindRegEx("  &::-webkit-scrollbar {")).toContain(
+    "::-webkit-scrollbar"
+  );
 });
 
 test("::-webkit-scrollbar", () => {
-  expect(testEscapedRegEx("::-webkit-scrollbar")).toContain("::-webkit-scrollbar");
+  expect(testEscapedRegEx("::-webkit-scrollbar")).toContain(
+    "::-webkit-scrollbar"
+  );
 });
-
 
 // test("  &::-webkit-scrollbar {", () => {
 //   expect(testEscapedRegEx("  &::-webkit-scrollbar {")).toContain("::-webkit-scrollbar");
 // });
 
 test("      @media all and (max-width: 991px) {", () => {
-  expect(testCssFindRegEx("      @media all and (max-width: 991px) {")).toContain("@media all and (max-width: 991px)");
+  expect(
+    testCssFindRegEx("      @media all and (max-width: 991px) {")
+  ).toContain("@media all and (max-width: 991px)");
 });
 
 test("@media all and (max-width: 991px)", () => {
-  expect(testEscapedRegEx("@media all and (max-width: 991px)")).toContain("@media all and (max-width: 991px)");
+  expect(testEscapedRegEx("@media all and (max-width: 991px)")).toContain(
+    "@media all and (max-width: 991px)"
+  );
 });
 
 // test("      @media all and (max-width: 991px) {", () => {
 //   expect(testEscapedRegEx("      @media all and (max-width: 991px) {")).toContain("@media all and (max-width: 991px)");
 // });
 
-
 test("  font-family: sans-serif;", () => {
   expect(testCssFindRegEx("  font-family: sans-serif;")).toHaveLength(0);
 });
 
 test("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);", () => {
-  expect(testCssFindRegEx("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);")).toHaveLength(0);
+  expect(
+    testCssFindRegEx("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);")
+  ).toHaveLength(0);
 });
 
 test("  font-family: sans-serif;", () => {
@@ -122,17 +183,26 @@ test("  font-family: sans-serif;", () => {
 });
 
 test("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);", () => {
-  expect(testEscapedRegEx("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);")).toHaveLength(0);
+  expect(
+    testEscapedRegEx("  -webkit-tap-highlight-color: rgba(0, 0, 0, 0);")
+  ).toHaveLength(0);
 });
 
 test('  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";', () => {
-  expect(testCssFindRegEx('  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";')).toHaveLength(0);
+  expect(
+    testCssFindRegEx(
+      '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";'
+    )
+  ).toHaveLength(0);
 });
 
 test('  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";', () => {
-  expect(testEscapedRegEx('  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";')).toHaveLength(0);
+  expect(
+    testEscapedRegEx(
+      '  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,"Microsoft YaHei", "Helvetica Neue", Arial, sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol";'
+    )
+  ).toHaveLength(0);
 });
-
 
 test("h1,", () => {
   expect(testCssFindRegEx("h1,")).toContain("h1");
@@ -151,7 +221,9 @@ test("title", () => {
 });
 
 test("        .ant-menu-root, .ant-menu-root {", () => {
-  expect(testEscapedRegEx("        .ant-menu-root, .ant-menu-root {")).toContain(".ant-menu-root");
+  expect(
+    testEscapedRegEx("        .ant-menu-root, .ant-menu-root {")
+  ).toContain(".ant-menu-root");
 });
 
 test(".ol-container>li {", () => {
