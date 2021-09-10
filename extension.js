@@ -12,7 +12,7 @@ function activate(context) {
   const cssFindRegEx =
     /[^\s&>]+(?=\s\{)|\.[^,\s]+(?=>)|\.[^,\s]+(?=,)|[^,\s&>]+(?=\s\.)|@.+(?=\s\{)|(?<=&:).+(?=\s\{)|(?<=&\[).+(?=\s\{)|(?<=&)\..+(?=\s\{)|^[^\[\s]+(?=,$)|(?<=abbr\[).+(?=\],$)/gim;
   const fullHtmlTagsClassesRegEx =
-    /(?<=[A-Za-z]+ClassName[\s\S]+["`']{1})[^:]+(?=["'`]{1}[\s\S]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
+    /(?<=className=\{[^\}]+["`']{1})[^:"`'\{\}]+(?=["'`]{1}[^\{]+\})|(?<=className:\s?["']{1})[\w_-]+(?=["']{1})|(?<=id=")[^"]+|(?<=id=')[^']+|(?<=\[id\]=")[^"]+|(?<=\[id\]=')[^']+|(?<=<)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=")[^"]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=')[^']+|(?<=@include\s)[^\s]+|(?<=\bstyles.)[\w_-]+|(?<=[\[?ng]{0,2}class[Name]{0,4}\]?=\{`)[^$]+(?=\`)/gim;
   const unusedClassDecorationType =
     vscode.window.createTextEditorDecorationType({
       color: { id: "riceCereal.unusedCssClassColor" },
