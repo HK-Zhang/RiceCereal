@@ -13,6 +13,9 @@ Automatically highlights the unused css classes when opening css/scss/sass files
 
 ## Release Notes
 
+### 0.0.7
+support ts and tsx file.
+
 ### 0.0.6
 
 support css module. css must be imported as an object named 'styles'.
