@@ -86,6 +86,6 @@ exports.fullHtmlTagsClassesRegEx = new RegExp(
   "gmi"
 );
 
-exports.styleFileExtensions = ["css", "scss", "sass"];
+exports.styleFileExtensions = ["css", "scss", "sass", "less"];
 exports.htmlFileExtensions = ["htm", "html", "jsx", "js", "tsx", "ts"];
 
