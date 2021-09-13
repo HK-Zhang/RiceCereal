@@ -21,10 +21,13 @@
 		"css"
 	],
 	"categories": [
-		"Other"
+		"Linters"
 	],
 	"activationEvents": [
-		"*"
+		"onLanguage:css",
+		"onLanguage:less",
+		"onLanguage:scss",
+		"onLanguage:sass"
 	],
 	"main": "./extension.js",
 	"contributes": {
@@ -33,9 +36,9 @@
 				"id": "riceCereal.unusedCssClassColor",
 				"description": "unused css classes color",
 				"defaults": {
-					"dark": "#595959",
+					"dark": "#8e8e8e",
 					"light": "#a4a4a4",
-					"highContrast": "#595959"
+					"highContrast": "#8e8e8e"
 				}
 			}
 		]

@@ -1,7 +1,7 @@
 # RiceCereal CSS Refactor Tool
 
-1. Highlights the unused css classes of css/scss/sass files by scaning js files in the same folder.
-2. TODO
+1. Highlights the unused css classes of css/scss/sass/less files by scaning js files in the same folder.
+2. TODO MORE.
 
 ## How to use
 
